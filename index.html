@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<title>The Peripheral — English Immersion Lab</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">P</div><div><b>PERIPHERAL</b><small>English Immersion Lab</small></div></div>
+    <div class="profile-card">
+      <div class="ring"><span id="progressPct">0%</span></div>
+      <div><b>پیشرفت یادگیری</b><small id="progressText">0 از 0 جمله مرور شده</small></div>
+    </div>
+    <nav>
+      <button class="nav active" data-view="dashboard">⌂ داشبورد</button>
+      <button class="nav" data-view="lines">▤ دیالوگ‌ها</button>
+      <button class="nav" data-view="flashcards">◈ فلش‌کارت</button>
+      <button class="nav" data-view="quiz">✦ آزمون هوشمند</button>
+      <button class="nav" data-view="typing">⌨ تایپ و تولید جمله</button>
+      <button class="nav" data-view="stats">◌ آمار و مرور</button>
+    </nav>
+    <div class="side-tip"><b>روش پیشنهادی</b><p>اول معنی را بفهم، بعد جمله را بدون نگاه کردن بازسازی کن، سپس با صدای بلند بگو.</p></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">EPISODE 01 • 01:07:14</div>
+        <h1 id="pageTitle">آزمایشگاه یادگیری</h1>
+      </div>
+      <div class="actions">
+        <button class="ghost" id="focusBtn">🎯 حالت تمرکز</button>
+        <button class="ghost" id="resetBtn">↺ پاک‌کردن پیشرفت</button>
+      </div>
+    </header>
+
+    <section id="dashboard" class="view active">
+      <div class="hero">
+        <div><span class="pill">OFFLINE • LOCAL</span><h2>این قسمت را تبدیل به «دانش فعال» کن.</h2>
+        <p>جمله‌ها را در چند مسیر مختلف می‌بینی: درک، بازیابی، شنیدن، تایپ و مرور فاصله‌دار. هدف فقط حفظ معنی نیست؛ هدف این است که وقتی فیلم را بدون زیرنویس می‌بینی، مغزت جمله را خودش تشخیص دهد.</p>
+        <button class="primary" onclick="startSmartSession()">شروع جلسه ۱۰ دقیقه‌ای →</button></div>
+        <div class="orb"><div class="orb-core">LISTEN<br>RECALL<br>USE</div></div>
+      </div>
+      <div class="grid3">
+        <div class="metric"><span>کل دیالوگ‌ها</span><b id="mTotal">0</b><small>از فایل زیرنویس</small></div>
+        <div class="metric"><span>جمله‌های دارای ترجمه</span><b id="mTranslated">0</b><small>ترجمه‌های آفلاین منتخب</small></div>
+        <div class="metric"><span>مرورهای امروز</span><b id="mReviews">0</b><small>ذخیره‌شده روی همین دستگاه</small></div>
+      </div>
+      <div class="section-head"><div><h3>مسیر یادگیری</h3><p>هر مرحله یک مهارت متفاوت را فعال می‌کند.</p></div></div>
+      <div class="path">
+        <button onclick="openView('lines')"><i>01</i><b>Context</b><small>جمله را در بافت داستان ببین</small></button>
+        <button onclick="openView('flashcards')"><i>02</i><b>Recall</b><small>بدون کمک معنی را بازیابی کن</small></button>
+        <button onclick="openView('quiz')"><i>03</i><b>Challenge</b><small>حافظه را در آزمون بسنج</small></button>
+        <button onclick="openView('typing')"><i>04</i><b>Produce</b><small>خودت جمله را بساز</small></button>
+      </div>
+      <div class="quote"><span>یادگیری عمیق</span><b>«اگر فقط ترجمه را ببینی، آشنا می‌شوی؛ اگر جمله را از حافظه بسازی، یاد می‌گیری.»</b></div>
+    </section>
+
+    <section id="lines" class="view">
+      <div class="toolbar">
+        <input id="search" placeholder="جستجو در فارسی یا ترجمه..." />
+        <select id="filter"><option value="all">همه</option><option value="translated">دارای ترجمه</option><option value="pending">بدون ترجمه آفلاین</option><option value="reviewed">مرور شده</option></select>
+        <button class="ghost" onclick="randomLine()">🎲 تصادفی</button>
+      </div>
+      <div id="lineList" class="line-list"></div>
+    </section>
+
+    <section id="flashcards" class="view">
+      <div class="study-top"><span class="pill">SPACED RECALL</span><span id="fcCount"></span></div>
+      <div class="flash-wrap">
+        <button class="arrow" onclick="prevCard()">‹</button>
+        <article class="flashcard" id="flashcard">
+          <div class="fc-meta"><span id="fcNum">#1</span><span id="fcTime">00:00</span></div>
+          <div class="fc-fa" id="fcFa"></div>
+          <div class="fc-divider"></div>
+          <div class="fc-en hidden" id="fcEn"></div>
+          <button class="reveal" id="revealBtn" onclick="revealCard()">نمایش معنی انگلیسی</button>
+          <div class="fc-actions hidden" id="fcActions">
+            <button class="hard" onclick="rateCard(1)">✕ سخت بود</button>
+            <button class="mid" onclick="rateCard(2)">≈ متوسط</button>
+            <button class="easy" onclick="rateCard(3)">✓ بلد بودم</button>
+          </div>
+          <button class="speak" onclick="speakCurrent()">🔊 شنیدن جمله</button>
+        </article>
+        <button class="arrow" onclick="nextCard()">›</button>
+      </div>
+    </section>
+
+    <section id="quiz" class="view">
+      <div class="quiz-head"><span class="pill">ACTIVE RECALL</span><span id="qScore">امتیاز: 0</span></div>
+      <article class="quiz-card">
+        <div class="q-label">این جمله را به انگلیسی نزدیک کن:</div>
+        <h2 id="qFa"></h2>
+        <div id="qOptions" class="options"></div>
+        <div id="qFeedback"></div>
+        <button class="primary" onclick="newQuestion()">سؤال بعدی</button>
+      </article>
+    </section>
+
+    <section id="typing" class="view">
+      <div class="typing-card">
+        <span class="pill">PRODUCTION</span>
+        <h2 id="tFa"></h2>
+        <p>ترجمه انگلیسی را خودت تایپ کن. سیستم بر اساس کلمات مشترک و شباهت جمله بازخورد می‌دهد.</p>
+        <textarea id="answer" placeholder="Type the English sentence..."></textarea>
+        <div class="typing-actions"><button class="primary" onclick="checkTyping()">بررسی پاسخ</button><button class="ghost" onclick="showTypingAnswer()">نمایش پاسخ</button></div>
+        <div id="typingFeedback"></div>
+      </div>
+    </section>
+
+    <section id="stats" class="view">
+      <div class="grid3">
+        <div class="metric"><span>تسلط تقریبی</span><b id="sMastery">0%</b><small>بر اساس امتیازهای ثبت‌شده</small></div>
+        <div class="metric"><span>مرور امروز</span><b id="sToday">0</b><small>فعالیت این دستگاه</small></div>
+        <div class="metric"><span>سخت‌ترین‌ها</span><b id="sHard">0</b><small>نیازمند تکرار</small></div>
+      </div>
+      <div class="review-panel"><h3>الگوی مرور پیشنهادی</h3><div class="timeline"><span>امروز</span><span>فردا</span><span>۳ روز</span><span>۷ روز</span><span>۱۴ روز</span><span>۳۰ روز</span></div><p>هر جمله‌ای که سخت بود، دوباره زودتر برمی‌گردد؛ جمله‌ای که راحت بود فاصله بیشتری می‌گیرد.</p></div>
+      <div class="review-panel"><h3>واژه‌های پرتکرار فارسی در فایل</h3><div id="wordCloud" class="word-cloud"></div></div>
+    </section>
+  </main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
