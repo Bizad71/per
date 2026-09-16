@@ -1,128 +1,94 @@
 <!doctype html>
-<html lang="fa" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0b1020">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0d14">
 <title>The Peripheral — English Immersion Lab</title>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css"><link rel="manifest" href="manifest.json">
 </head>
 <body>
 <div class="app-shell">
-  <aside class="sidebar">
-    <div class="brand"><div class="logo">P</div><div><b>PERIPHERAL</b><small>English Immersion Lab</small></div></div>
-    <div class="profile-card">
-      <div class="ring"><span id="progressPct">0%</span></div>
-      <div><b>پیشرفت یادگیری</b><small id="progressText">0 از 0 جمله مرور شده</small></div>
+<header class="topbar">
+  <button class="icon-btn" id="menuBtn" aria-label="Open menu">☰</button>
+  <div class="brand"><span class="brand-dot"></span><div><b>ENGLISH IMMERSION</b><small>The Peripheral · S01E01</small></div></div>
+  <button class="icon-btn" id="soundToggle" title="Sound">🔊</button>
+</header>
+
+<main id="app">
+<section id="home" class="screen active">
+  <div class="hero">
+    <div class="eyebrow">MOVIE MODE</div>
+    <h1>Learn the episode.<br><span>Remember the English.</span></h1>
+    <p>Start with words, build phrases, master sentences, then test yourself without Persian.</p>
+    <div class="hero-actions">
+      <button class="primary" data-go="learn">Start learning <span>→</span></button>
+      <button class="ghost" data-go="review">Review weak points</button>
     </div>
-    <nav>
-      <button class="nav active" data-view="dashboard">⌂ داشبورد</button>
-      <button class="nav" data-view="lines">▤ دیالوگ‌ها</button>
-      <button class="nav" data-view="flashcards">◈ فلش‌کارت</button>
-      <button class="nav" data-view="quiz">✦ آزمون هوشمند</button>
-      <button class="nav" data-view="typing">⌨ تایپ و تولید جمله</button>
-      <button class="nav" data-view="stats">◌ آمار و مرور</button>
-    </nav>
-    <div class="side-tip"><b>روش پیشنهادی</b><p>اول معنی را بفهم، بعد جمله را بدون نگاه کردن بازسازی کن، سپس با صدای بلند بگو.</p></div>
-  </aside>
+  </div>
+  <div class="stats-grid">
+    <div class="stat"><strong id="streak">0</strong><span>day streak</span></div>
+    <div class="stat"><strong id="mastered">0</strong><span>mastered</span></div>
+    <div class="stat"><strong id="accuracy">0%</strong><span>accuracy</span></div>
+  </div>
+  <div class="section-head"><div><span class="eyebrow">YOUR PATH</span><h2>Four steps</h2></div></div>
+  <div class="path">
+    <button class="path-card" data-go="words"><i>01</i><b>Words</b><span>Build the vocabulary.</span></button>
+    <button class="path-card" data-go="phrases"><i>02</i><b>Phrases</b><span>Learn natural chunks.</span></button>
+    <button class="path-card" data-go="sentences"><i>03</i><b>Sentences</b><span>Understand the whole idea.</span></button>
+    <button class="path-card" data-go="quiz"><i>04</i><b>Recall</b><span>Prove you remember.</span></button>
+  </div>
+  <div class="tip"><b>🎯 Active recall</b><span>The app hides Persian until you ask. Your brain does the work first.</span></div>
+</section>
 
-  <main class="main">
-    <header class="topbar">
-      <div>
-        <div class="eyebrow">EPISODE 01 • 01:07:14</div>
-        <h1 id="pageTitle">آزمایشگاه یادگیری</h1>
-      </div>
-      <div class="actions">
-        <button class="ghost" id="focusBtn">🎯 حالت تمرکز</button>
-        <button class="ghost" id="resetBtn">↺ پاک‌کردن پیشرفت</button>
-      </div>
-    </header>
+<section id="learn" class="screen">
+  <div class="section-head"><div><span class="eyebrow">LEARNING SESSION</span><h2 id="learnTitle">Words first</h2></div><button class="mini" data-go="home">Home</button></div>
+  <div class="progress"><span id="progressBar"></span></div>
+  <div id="lesson"></div>
+  <div class="controls">
+    <button class="ghost" id="prevBtn">← Back</button><button class="primary" id="nextBtn">Next →</button>
+  </div>
+</section>
 
-    <section id="dashboard" class="view active">
-      <div class="hero">
-        <div><span class="pill">OFFLINE • LOCAL</span><h2>این قسمت را تبدیل به «دانش فعال» کن.</h2>
-        <p>جمله‌ها را در چند مسیر مختلف می‌بینی: درک، بازیابی، شنیدن، تایپ و مرور فاصله‌دار. هدف فقط حفظ معنی نیست؛ هدف این است که وقتی فیلم را بدون زیرنویس می‌بینی، مغزت جمله را خودش تشخیص دهد.</p>
-        <button class="primary" onclick="startSmartSession()">شروع جلسه ۱۰ دقیقه‌ای →</button></div>
-        <div class="orb"><div class="orb-core">LISTEN<br>RECALL<br>USE</div></div>
-      </div>
-      <div class="grid3">
-        <div class="metric"><span>کل دیالوگ‌ها</span><b id="mTotal">0</b><small>از فایل زیرنویس</small></div>
-        <div class="metric"><span>جمله‌های دارای ترجمه</span><b id="mTranslated">0</b><small>ترجمه‌های آفلاین منتخب</small></div>
-        <div class="metric"><span>مرورهای امروز</span><b id="mReviews">0</b><small>ذخیره‌شده روی همین دستگاه</small></div>
-      </div>
-      <div class="section-head"><div><h3>مسیر یادگیری</h3><p>هر مرحله یک مهارت متفاوت را فعال می‌کند.</p></div></div>
-      <div class="path">
-        <button onclick="openView('lines')"><i>01</i><b>Context</b><small>جمله را در بافت داستان ببین</small></button>
-        <button onclick="openView('flashcards')"><i>02</i><b>Recall</b><small>بدون کمک معنی را بازیابی کن</small></button>
-        <button onclick="openView('quiz')"><i>03</i><b>Challenge</b><small>حافظه را در آزمون بسنج</small></button>
-        <button onclick="openView('typing')"><i>04</i><b>Produce</b><small>خودت جمله را بساز</small></button>
-      </div>
-      <div class="quote"><span>یادگیری عمیق</span><b>«اگر فقط ترجمه را ببینی، آشنا می‌شوی؛ اگر جمله را از حافظه بسازی، یاد می‌گیری.»</b></div>
-    </section>
+<section id="words" class="screen">
+ <div class="section-head"><div><span class="eyebrow">VOCABULARY</span><h2>Words</h2></div><button class="mini" data-go="home">Home</button></div>
+ <div class="search-row"><input id="wordSearch" placeholder="Search a word…"><select id="wordFilter"><option value="all">All</option><option value="learned">Learned</option><option value="new">New</option></select></div>
+ <div id="wordList" class="list"></div>
+</section>
 
-    <section id="lines" class="view">
-      <div class="toolbar">
-        <input id="search" placeholder="جستجو در فارسی یا ترجمه..." />
-        <select id="filter"><option value="all">همه</option><option value="translated">دارای ترجمه</option><option value="pending">بدون ترجمه آفلاین</option><option value="reviewed">مرور شده</option></select>
-        <button class="ghost" onclick="randomLine()">🎲 تصادفی</button>
-      </div>
-      <div id="lineList" class="line-list"></div>
-    </section>
+<section id="phrases" class="screen">
+ <div class="section-head"><div><span class="eyebrow">NATURAL ENGLISH</span><h2>Phrases</h2></div><button class="mini" data-go="home">Home</button></div>
+ <p class="muted">Learn chunks as native speakers use them—not isolated dictionary words.</p>
+ <div id="phraseList" class="list"></div>
+</section>
 
-    <section id="flashcards" class="view">
-      <div class="study-top"><span class="pill">SPACED RECALL</span><span id="fcCount"></span></div>
-      <div class="flash-wrap">
-        <button class="arrow" onclick="prevCard()">‹</button>
-        <article class="flashcard" id="flashcard">
-          <div class="fc-meta"><span id="fcNum">#1</span><span id="fcTime">00:00</span></div>
-          <div class="fc-fa" id="fcFa"></div>
-          <div class="fc-divider"></div>
-          <div class="fc-en hidden" id="fcEn"></div>
-          <button class="reveal" id="revealBtn" onclick="revealCard()">نمایش معنی انگلیسی</button>
-          <div class="fc-actions hidden" id="fcActions">
-            <button class="hard" onclick="rateCard(1)">✕ سخت بود</button>
-            <button class="mid" onclick="rateCard(2)">≈ متوسط</button>
-            <button class="easy" onclick="rateCard(3)">✓ بلد بودم</button>
-          </div>
-          <button class="speak" onclick="speakCurrent()">🔊 شنیدن جمله</button>
-        </article>
-        <button class="arrow" onclick="nextCard()">›</button>
-      </div>
-    </section>
+<section id="sentences" class="screen">
+ <div class="section-head"><div><span class="eyebrow">MOVIE SENTENCES</span><h2>Sentences</h2></div><button class="mini" data-go="home">Home</button></div>
+ <div class="toggle-line"><span>Show Persian meaning</span><button class="switch" id="meaningToggle"><i></i></button></div>
+ <div id="sentenceList" class="list"></div>
+</section>
 
-    <section id="quiz" class="view">
-      <div class="quiz-head"><span class="pill">ACTIVE RECALL</span><span id="qScore">امتیاز: 0</span></div>
-      <article class="quiz-card">
-        <div class="q-label">این جمله را به انگلیسی نزدیک کن:</div>
-        <h2 id="qFa"></h2>
-        <div id="qOptions" class="options"></div>
-        <div id="qFeedback"></div>
-        <button class="primary" onclick="newQuestion()">سؤال بعدی</button>
-      </article>
-    </section>
+<section id="quiz" class="screen">
+ <div class="section-head"><div><span class="eyebrow">ACTIVE RECALL</span><h2>Recall challenge</h2></div><button class="mini" data-go="home">Home</button></div>
+ <div id="quizBox" class="quizbox"></div>
+</section>
 
-    <section id="typing" class="view">
-      <div class="typing-card">
-        <span class="pill">PRODUCTION</span>
-        <h2 id="tFa"></h2>
-        <p>ترجمه انگلیسی را خودت تایپ کن. سیستم بر اساس کلمات مشترک و شباهت جمله بازخورد می‌دهد.</p>
-        <textarea id="answer" placeholder="Type the English sentence..."></textarea>
-        <div class="typing-actions"><button class="primary" onclick="checkTyping()">بررسی پاسخ</button><button class="ghost" onclick="showTypingAnswer()">نمایش پاسخ</button></div>
-        <div id="typingFeedback"></div>
-      </div>
-    </section>
+<section id="review" class="screen">
+ <div class="section-head"><div><span class="eyebrow">SPACED REVIEW</span><h2>Weak points</h2></div><button class="mini" data-go="home">Home</button></div>
+ <div id="reviewList" class="list"></div>
+</section>
 
-    <section id="stats" class="view">
-      <div class="grid3">
-        <div class="metric"><span>تسلط تقریبی</span><b id="sMastery">0%</b><small>بر اساس امتیازهای ثبت‌شده</small></div>
-        <div class="metric"><span>مرور امروز</span><b id="sToday">0</b><small>فعالیت این دستگاه</small></div>
-        <div class="metric"><span>سخت‌ترین‌ها</span><b id="sHard">0</b><small>نیازمند تکرار</small></div>
-      </div>
-      <div class="review-panel"><h3>الگوی مرور پیشنهادی</h3><div class="timeline"><span>امروز</span><span>فردا</span><span>۳ روز</span><span>۷ روز</span><span>۱۴ روز</span><span>۳۰ روز</span></div><p>هر جمله‌ای که سخت بود، دوباره زودتر برمی‌گردد؛ جمله‌ای که راحت بود فاصله بیشتری می‌گیرد.</p></div>
-      <div class="review-panel"><h3>واژه‌های پرتکرار فارسی در فایل</h3><div id="wordCloud" class="word-cloud"></div></div>
-    </section>
-  </main>
+<section id="settings" class="screen">
+ <div class="section-head"><div><span class="eyebrow">CONTROL CENTER</span><h2>Settings</h2></div><button class="mini" data-go="home">Home</button></div>
+ <div class="setting-card"><b>Persian meaning</b><span>Keep it hidden by default for stronger recall.</span><button class="ghost" id="resetProgress">Reset progress</button></div>
+ <div class="setting-card"><b>Export progress</b><span>Save your learning state to a JSON file.</span><button class="ghost" id="exportBtn">Export</button></div>
+ <div class="setting-card"><b>Source coverage</b><span id="coverage"></span></div>
+</section>
+</main>
+
+<nav class="bottom-nav">
+<button data-go="home">⌂<small>Home</small></button><button data-go="words">◈<small>Words</small></button><button data-go="sentences">▤<small>Sentences</small></button><button data-go="quiz">✓<small>Recall</small></button><button data-go="settings">⚙<small>More</small></button>
+</nav>
+<div id="toast"></div>
 </div>
-<script src="app.js"></script>
-</body>
-</html>
+<script src="app.js"></script><script>if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});</script>
+</body></html>

@@ -1,0 +1,8 @@
+{
+  "name": "The Peripheral English Immersion Lab",
+  "short_name": "Peripheral English",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#080a10",
+  "background_color": "#080a10"
+}

@@ -1,26 +1,24 @@
-# The Peripheral — English Immersion Lab
+THE PERIPHERAL — ENGLISH IMMERSION LAB v2
 
-این پروژه بر اساس فایل زیرنویس فارسی‌ای که کاربر در گفتگو بارگذاری کرده ساخته شده است.
+Open index.html in a modern browser.
 
-## اجرا
-1. کل ZIP را Extract کنید.
-2. فایل `index.html` را باز کنید.
-3. اگر مرورگر به خاطر محدودیت fetch فایل محلی `data.json` را نخواند، پروژه را با یک Local Server اجرا کنید:
-   - Python: `python -m http.server 8000`
-   - سپس: `http://localhost:8000`
+Designed mobile-first:
+- Words -> phrases -> sentences -> active recall
+- Persian meaning hidden by default and revealed on demand
+- Browser English pronunciation
+- Search/filter vocabulary
+- Mastery levels stored in localStorage
+- Weak-point review queue
+- Quiz with active recall
+- Export progress
+- Responsive UI
 
-## امکانات
-- داشبورد یادگیری
-- تمام خطوط دیالوگ فایل
-- جستجو و فیلتر
-- فلش‌کارت با بازیابی فعال
-- امتیازدهی سخت/متوسط/آسان
-- آزمون چهارگزینه‌ای
-- تمرین تایپ و تولید جمله
-- Speech Synthesis مرورگر برای شنیدن انگلیسی
-- مرور و آمار با ذخیره در localStorage
-- واژه‌های پرتکرار فارسی
-- طراحی RTL، واکنش‌گرا و تیره
+SOURCE NOTE
+The supplied source is a Persian subtitle file. This build preserves all usable subtitle lines.
+It includes English learning translations for the high-value lines/phrases that could be translated reliably during the build.
+It does NOT pretend those translations are the exact original English subtitle wording.
+Untranslated subtitle lines remain in data.json with status "source-needed".
 
-## نکته مهم
-فایل منبع فقط زیرنویس فارسی است؛ بنابراین دیتاست آفلاین انگلیسی شامل ترجمه‌های منتخب و پرکاربرد ساخته شده از همان متن است و برای همه 873 ورودی ترجمه انگلیسی کامل از منبع موجود نبود. خطوط بدون ترجمه همچنان در سایت نگه داشته شده‌اند تا چیزی از زیرنویس حذف نشود.
+IMPORTANT
+For exact movie-dialogue English (rather than learning translations), provide the official/English subtitle file.
+Then the app can be upgraded to timestamp-align the English and Persian subtitles and teach every word and sentence from the exact English dialogue.
